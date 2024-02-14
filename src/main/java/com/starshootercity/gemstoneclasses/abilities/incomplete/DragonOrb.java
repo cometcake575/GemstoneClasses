@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class JadeOrb extends OrbAbility implements VisibleAbility {
+public class DragonOrb extends OrbAbility implements VisibleAbility {
     @Override
     public @NotNull List<OriginSwapper.LineData.LineComponent> getDescription() {
         return null;
@@ -27,7 +27,7 @@ public class JadeOrb extends OrbAbility implements VisibleAbility {
 
     @Override
     public int getID() {
-        return 4;
+        return 3;
     }
 
     @Override
