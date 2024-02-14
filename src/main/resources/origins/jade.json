@@ -1,0 +1,13 @@
+{
+  "powers": [
+    "gemstoneclasses:hero_and_haste",
+    "gemstoneclasses:jade_orb"
+  ],
+  "icon": {
+    "item": "minecraft:command_block",
+    "custom_mode_data": 3
+  },
+  "order": 3,
+  "impact": 1,
+  "description": ""
+}

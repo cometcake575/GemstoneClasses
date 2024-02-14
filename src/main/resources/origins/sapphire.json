@@ -1,0 +1,13 @@
+{
+  "powers": [
+    "gemstoneclasses:extra_hearts",
+    "gemstoneclasses:sapphire_orb"
+  ],
+  "icon": {
+    "item": "minecraft:command_block",
+    "custom_mode_data": 5
+  },
+  "order": 5,
+  "impact": 1,
+  "description": ""
+}

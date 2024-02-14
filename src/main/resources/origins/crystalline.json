@@ -1,0 +1,13 @@
+{
+  "powers": [
+    "gemstoneclasses:regeneration",
+    "gemstoneclasses:crystalline_orb"
+  ],
+  "icon": {
+    "item": "minecraft:command_block",
+    "custom_mode_data": 2
+  },
+  "order": 2,
+  "impact": 1,
+  "description": ""
+}

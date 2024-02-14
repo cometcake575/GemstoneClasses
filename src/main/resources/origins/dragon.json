@@ -1,0 +1,13 @@
+{
+  "powers": [
+    "gemstoneclasses:resistance_and_speed",
+    "gemstoneclasses:dragon_form_orb"
+  ],
+  "icon": {
+    "item": "minecraft:command_block",
+    "custom_mode_data": 6
+  },
+  "order": 1,
+  "impact": 3,
+  "description": ""
+}

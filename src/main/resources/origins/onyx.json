@@ -1,0 +1,13 @@
+{
+  "powers": [
+    "gemstoneclasses:fire_resistance",
+    "gemstoneclasses:onyx_orb"
+  ],
+  "icon": {
+    "item": "minecraft:command_block",
+    "custom_mode_data": 4
+  },
+  "order": 4,
+  "impact": 1,
+  "description": ""
+}

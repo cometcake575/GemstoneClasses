@@ -1,0 +1,13 @@
+{
+  "powers": [
+    "gemstoneclasses:water_powers",
+    "gemstoneclasses:aquamarine_orb"
+  ],
+  "icon": {
+    "item": "minecraft:command_block",
+    "custom_mode_data": 1
+  },
+  "order": 1,
+  "impact": 1,
+  "description": ""
+}
