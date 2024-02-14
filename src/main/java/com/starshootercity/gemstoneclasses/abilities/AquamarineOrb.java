@@ -1,4 +1,4 @@
-package com.starshootercity.gemstoneclasses.abilities.incomplete;
+package com.starshootercity.gemstoneclasses.abilities;
 
 import com.starshootercity.OriginSwapper;
 import com.starshootercity.abilities.VisibleAbility;

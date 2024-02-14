@@ -1,4 +1,4 @@
-package com.starshootercity.gemstoneclasses.abilities.incomplete;
+package com.starshootercity.gemstoneclasses.abilities;
 
 import com.destroystokyo.paper.event.server.ServerTickEndEvent;
 import com.starshootercity.abilities.Ability;

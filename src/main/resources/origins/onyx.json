@@ -5,7 +5,7 @@
   ],
   "icon": {
     "item": "minecraft:command_block",
-    "custom_mode_data": 4
+    "custom_model_data": 5
   },
   "order": 4,
   "impact": 1,

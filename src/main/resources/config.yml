@@ -1,1 +1,2 @@
-resource-pack-url: ""
+enable-resource-pack: true
+resource-pack-url: "https://github.com/cometcake575/GemstoneClasses/raw/main/src/main/GemstoneClasses%20Pack.zip"
