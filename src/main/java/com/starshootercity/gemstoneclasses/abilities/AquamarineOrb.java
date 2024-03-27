@@ -2,13 +2,17 @@ package com.starshootercity.gemstoneclasses.abilities;
 
 import com.starshootercity.OriginSwapper;
 import com.starshootercity.abilities.VisibleAbility;
+import io.papermc.paper.event.entity.EntityMoveEvent;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -16,7 +20,7 @@ import java.util.List;
 public class AquamarineOrb extends OrbAbility implements VisibleAbility {
     @Override
     public @NotNull List<OriginSwapper.LineData.LineComponent> getDescription() {
-        return OriginSwapper.LineData.makeLineFor("You have the Aquamarine Orb, an infinite water bucket with a 5 second cooldown.", OriginSwapper.LineData.LineComponent.LineType.DESCRIPTION);
+        return OriginSwapper.LineData.makeLineFor("You have the Aquamarine Orb, freezing whatever you right click for 5 seconds with a 1 minute and 30 second cooldown.", OriginSwapper.LineData.LineComponent.LineType.DESCRIPTION);
     }
 
     @Override
@@ -35,13 +39,28 @@ public class AquamarineOrb extends OrbAbility implements VisibleAbility {
     }
 
     @Override
-    public int onOrbUseEvent(PlayerInteractEvent event) {
-        if (event.getClickedBlock() == null) return 0;
-        Block relative = event.getClickedBlock().getRelative(event.getBlockFace());
-        if (relative.isSolid()) return 0;
-        event.getPlayer().swingMainHand();
-        relative.setType(Material.WATER);
-        return 100;
+    public int onOrbUsePrimaryEvent(PlayerInteractEvent event) {
+        if (event.getPlayer().getTargetEntity(5) instanceof LivingEntity entity) {
+            entity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 9));
+            entity.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 9));
+            return 1800;
+        } else return 0;
+    }
+
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event) {
+        PotionEffect effect = event.getPlayer().getPotionEffect(PotionEffectType.SLOW);
+        if (effect != null) {
+            if (effect.getAmplifier() == 9) event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onEntityMove(EntityMoveEvent event) {
+        PotionEffect effect = event.getEntity().getPotionEffect(PotionEffectType.SLOW);
+        if (effect != null) {
+            if (effect.getAmplifier() == 9) event.setCancelled(true);
+        }
     }
 
     @Override

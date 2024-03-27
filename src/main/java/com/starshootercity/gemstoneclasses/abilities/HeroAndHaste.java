@@ -36,7 +36,7 @@ public class HeroAndHaste implements VisibleAbility, Listener {
         if (event.getTickNumber() % 40 != 0) return;
         for (Player player : Bukkit.getOnlinePlayers()) {
             AbilityRegister.runForAbility(player, getKey(), () -> {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.HERO_OF_THE_VILLAGE, 60, 4));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.HERO_OF_THE_VILLAGE, 60, 1));
                 player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 60, 1));
             });
         }

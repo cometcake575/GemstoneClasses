@@ -40,7 +40,8 @@ public class DragonOrb extends OrbAbility implements VisibleAbility, FlightAllow
     }
 
     @Override
-    public int onOrbUseEvent(PlayerInteractEvent event) {
+    public int onOrbUsePrimaryEvent(PlayerInteractEvent event) {
+        event.getPlayer().swingMainHand();
         event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 200, 9));
         flightTimes.put(event.getPlayer(), Bukkit.getCurrentTick() + 200);
         return 3000;

@@ -16,7 +16,7 @@ import java.util.List;
 public class SapphireOrb extends OrbAbility implements VisibleAbility {
     @Override
     public @NotNull List<OriginSwapper.LineData.LineComponent> getDescription() {
-        return OriginSwapper.LineData.makeLineFor("You have the Sapphire Orb, giving Regeneration 5 and Health Boost 5 for 10 seconds with a 2 minute and 30 second cooldown.", OriginSwapper.LineData.LineComponent.LineType.DESCRIPTION);
+        return OriginSwapper.LineData.makeLineFor("You have the Sapphire Orb, giving Regeneration 5 and Health Boost 5 for 10 seconds with a 1 minute and 30 second cooldown.", OriginSwapper.LineData.LineComponent.LineType.DESCRIPTION);
     }
 
     @Override
@@ -35,10 +35,11 @@ public class SapphireOrb extends OrbAbility implements VisibleAbility {
     }
 
     @Override
-    public int onOrbUseEvent(PlayerInteractEvent event) {
-        event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 4));
-        event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 200, 4));
-        return 3000;
+    public int onOrbUsePrimaryEvent(PlayerInteractEvent event) {
+        event.getPlayer().swingMainHand();
+        event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 2));
+        event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 200, 2));
+        return 1800;
     }
 
     @Override

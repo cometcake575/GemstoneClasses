@@ -18,7 +18,7 @@ import java.util.List;
 public class ResistanceAndSpeed implements VisibleAbility, Listener {
     @Override
     public @NotNull List<OriginSwapper.LineData.LineComponent> getDescription() {
-        return OriginSwapper.LineData.makeLineFor("You have all infinite resistance and speed.", OriginSwapper.LineData.LineComponent.LineType.DESCRIPTION);
+        return OriginSwapper.LineData.makeLineFor("You have infinite resistance and speed.", OriginSwapper.LineData.LineComponent.LineType.DESCRIPTION);
     }
 
     @Override

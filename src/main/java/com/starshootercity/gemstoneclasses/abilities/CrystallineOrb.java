@@ -18,7 +18,7 @@ import java.util.List;
 public class CrystallineOrb extends OrbAbility implements VisibleAbility {
     @Override
     public @NotNull List<OriginSwapper.LineData.LineComponent> getDescription() {
-        return OriginSwapper.LineData.makeLineFor("You have the Crystalline Orb, giving invincibility for 5 seconds, with a 2 minute and 30 second cooldown.", OriginSwapper.LineData.LineComponent.LineType.DESCRIPTION);
+        return OriginSwapper.LineData.makeLineFor("You have the Crystalline Orb, giving invincibility for 5 seconds, with a 1 minute and 30 second cooldown.", OriginSwapper.LineData.LineComponent.LineType.DESCRIPTION);
     }
 
     @Override
@@ -37,10 +37,11 @@ public class CrystallineOrb extends OrbAbility implements VisibleAbility {
     }
 
     @Override
-    public int onOrbUseEvent(PlayerInteractEvent event) {
+    public int onOrbUsePrimaryEvent(PlayerInteractEvent event) {
+        event.getPlayer().swingMainHand();
         event.getPlayer().setInvulnerable(true);
         Bukkit.getScheduler().scheduleSyncDelayedTask(GemstoneClasses.getInstance(), () -> event.getPlayer().setInvulnerable(false), 100);
-        return 3000;
+        return 1800;
     }
 
     @EventHandler

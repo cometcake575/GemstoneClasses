@@ -3,11 +3,13 @@ package com.starshootercity.gemstoneclasses.abilities;
 import com.destroystokyo.paper.event.server.ServerTickEndEvent;
 import com.starshootercity.abilities.Ability;
 import com.starshootercity.abilities.AbilityRegister;
+import com.starshootercity.events.PlayerSwapOriginEvent;
 import com.starshootercity.gemstoneclasses.GemstoneClasses;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,6 +18,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
@@ -24,6 +27,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class OrbAbility implements Ability, Listener {
     private NamespacedKey getOrbKey() {
@@ -34,7 +38,10 @@ public abstract class OrbAbility implements Ability, Listener {
 
     public abstract int getID();
 
-    public abstract int onOrbUseEvent(PlayerInteractEvent event);
+    public abstract int onOrbUsePrimaryEvent(PlayerInteractEvent event);
+    public int onOrbUseSecondaryEvent(PlayerInteractEvent event) {
+        return 0;
+    }
 
     public ItemStack getOrb() {
         ItemStack orb = new ItemStack(Material.COMMAND_BLOCK);
@@ -75,6 +82,9 @@ public abstract class OrbAbility implements Ability, Listener {
                         if (item.getItemMeta().getPersistentDataContainer().has(getOrbKey())) event.setCancelled(true);
                     }
                 }
+            } else {
+                if (event.getWhoClicked().getInventory().getItemInOffHand().getItemMeta() == null) return;
+                if (event.getWhoClicked().getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().has(getOrbKey())) event.setCancelled(true);
             }
         }
         if (event.getCurrentItem() != null) {
@@ -86,8 +96,8 @@ public abstract class OrbAbility implements Ability, Listener {
 
     @EventHandler
     public void onPlayerSwapHandItems(PlayerSwapHandItemsEvent event) {
-        if (event.getOffHandItem().getItemMeta() == null) return;
-        if (event.getOffHandItem().getItemMeta().getPersistentDataContainer().has(getOrbKey())) event.setCancelled(true);
+        if (event.getMainHandItem().getItemMeta() == null) return;
+        if (event.getMainHandItem().getItemMeta().getPersistentDataContainer().has(getOrbKey())) event.setCancelled(true);
     }
 
     @EventHandler
@@ -104,39 +114,61 @@ public abstract class OrbAbility implements Ability, Listener {
                 event.getDrops().remove(item);
             }
         }
+        event.getPlayer().setCooldown(Material.COMMAND_BLOCK, 0);
     }
 
     @EventHandler
     public void onServerTickEnd(ServerTickEndEvent event) {
         for (Player player : Bukkit.getOnlinePlayers()) {
             AbilityRegister.runForAbility(player, getKey(), () -> {
-                ItemStack item = player.getInventory().getItem(0);
+                ItemStack item = player.getInventory().getItemInOffHand();
                 boolean go = false;
-                if (item == null) go = true;
-                else if (item.getItemMeta() == null) go = true;
+                if (item.getItemMeta() == null) go = true;
                 else if (!item.getItemMeta().getPersistentDataContainer().has(getOrbKey())) {
                     go = true;
                 }
+                if (item.getType() == Material.COMMAND_BLOCK) item.setType(Material.AIR);
                 if (go) {
-                    if (item != null) {
-                        for (ItemStack i : player.getInventory().addItem(item).values()) {
-                            player.getWorld().dropItemNaturally(player.getLocation(), i);
-                        }
+                    for (ItemStack i : player.getInventory().addItem(item).values()) {
+                        player.getWorld().dropItemNaturally(player.getLocation(), i);
                     }
-                    player.getInventory().setItem(0, getOrb());
+                    player.getInventory().setItemInOffHand(getOrb());
                 }
             });
         }
     }
 
     @EventHandler
+    public void onPlayerSwapOrigin(PlayerSwapOriginEvent event) {
+        for (ItemStack item : event.getPlayer().getInventory()) {
+            if (item == null) continue;
+            if (item.getType() == Material.COMMAND_BLOCK) {
+                event.getPlayer().getInventory().remove(item);
+            }
+        }
+        if (event.getPlayer().getInventory().getItemInOffHand().getType() == Material.COMMAND_BLOCK) {
+            event.getPlayer().getInventory().setItemInOffHand(new ItemStack(Material.AIR));
+        }
+    }
+
+    @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (event.getAction().isLeftClick()) return;
         if (event.getItem() == null) return;
         if (event.getItem().getItemMeta() == null) return;
-        if (event.getPlayer().getCooldown(Material.COMMAND_BLOCK) > 0) return;
         if (event.getItem().getItemMeta().getPersistentDataContainer().has(getOrbKey())) {
-            event.getPlayer().setCooldown(Material.COMMAND_BLOCK, onOrbUseEvent(event));
+            if (event.getAction().isRightClick()) event.setCancelled(true);
+            if (!event.getPlayer().isSneaking()) return;
+            if (event.getPlayer().getCooldown(Material.COMMAND_BLOCK) > 0) return;
+            event.getPlayer().setCooldown(Material.COMMAND_BLOCK, event.getAction().isLeftClick() ? onOrbUseSecondaryEvent(event) : onOrbUsePrimaryEvent(event));
+        }
+    }
+
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEntityEvent event) {
+        if (!List.of(EntityType.ALLAY, EntityType.ITEM_FRAME, EntityType.GLOW_ITEM_FRAME).contains(event.getRightClicked().getType())) return;
+        if (event.getPlayer().getInventory().getItemInOffHand().getItemMeta() == null) return;
+        if (event.getPlayer().getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().has(getOrbKey())) {
+            event.setCancelled(true);
         }
     }
 }

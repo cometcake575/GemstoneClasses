@@ -21,17 +21,27 @@ public class GemstoneClasses extends OriginsAddon implements Listener {
     @Override
     public @NotNull List<Ability> getAbilities() {
         return List.of(
+                new AmberOrb(),
                 new AquamarineOrb(),
+                new CelestialBlessing(),
                 new CrystallineOrb(),
+                new CitrineOrb(),
                 new DragonOrb(),
                 new ExtraHearts(),
                 new FireResistance(),
+                new GoldenHealth(),
+                new GoldenOrb(),
+                new GoldenSpeed(),
+                new GoldenStrength(),
                 new HeroAndHaste(),
                 new JadeOrb(),
                 new OnyxOrb(),
                 new Regeneration(),
                 new ResistanceAndSpeed(),
                 new SapphireOrb(),
+                new Saturation(),
+                new Strength(),
+                new CelestialShield(),
                 new WaterPowers()
         );
     }

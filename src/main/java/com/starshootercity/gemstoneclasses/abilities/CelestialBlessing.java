@@ -13,41 +13,42 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class OnyxOrb extends OrbAbility implements VisibleAbility {
+public class CelestialBlessing extends OrbAbility implements VisibleAbility {
     @Override
     public @NotNull List<OriginSwapper.LineData.LineComponent> getDescription() {
-        return OriginSwapper.LineData.makeLineFor("You have the Onyx Orb, giving Strength 3 for 10 seconds and has a 1 minute and 30 second cooldown.", OriginSwapper.LineData.LineComponent.LineType.DESCRIPTION);
+        return OriginSwapper.LineData.makeLineFor("Right click with the Celestial Orb to get Regeneration 3, Absorption 3 and Resistance 3 for 30 seconds, putting the orb on cooldown for 5 minutes.", OriginSwapper.LineData.LineComponent.LineType.TITLE);
     }
 
     @Override
     public @NotNull List<OriginSwapper.LineData.LineComponent> getTitle() {
-        return OriginSwapper.LineData.makeLineFor("Onyx Orb", OriginSwapper.LineData.LineComponent.LineType.TITLE);
+        return OriginSwapper.LineData.makeLineFor("Celestial Blessing", OriginSwapper.LineData.LineComponent.LineType.TITLE);
     }
 
     @Override
     public @NotNull String getNamespace() {
-        return "onyx";
+        return "celestial";
     }
 
     @Override
     public int getID() {
-        return 5;
+        return 9;
     }
 
     @Override
     public int onOrbUsePrimaryEvent(PlayerInteractEvent event) {
-        event.getPlayer().swingMainHand();
-        event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 2));
-        return 1800;
+        event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 600, 2));
+        event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 600, 2));
+        event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 600, 2));
+        return 6000;
     }
 
     @Override
     public @NotNull Component getName() {
-        return Component.text("Onyx Orb").decoration(TextDecoration.ITALIC, false).color(NamedTextColor.LIGHT_PURPLE);
+        return Component.text("Celestial Orb").decoration(TextDecoration.ITALIC, false).color(NamedTextColor.DARK_PURPLE);
     }
 
     @Override
     public @NotNull Key getKey() {
-        return Key.key("gemstoneclasses:onyx_orb");
+        return Key.key("gemstoneclasses:celestial_blessing");
     }
 }

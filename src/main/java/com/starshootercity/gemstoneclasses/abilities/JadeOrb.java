@@ -25,7 +25,7 @@ import java.util.Map;
 public class JadeOrb extends OrbAbility implements VisibleAbility {
     @Override
     public @NotNull List<OriginSwapper.LineData.LineComponent> getDescription() {
-        return OriginSwapper.LineData.makeLineFor("You have the Jade Orb, giving complete invisibility for 10 seconds, with a 2 minute cooldown.", OriginSwapper.LineData.LineComponent.LineType.DESCRIPTION);
+        return OriginSwapper.LineData.makeLineFor("You have the Jade Orb, giving complete invisibility for 10 seconds, with a 1 minute and 30 second cooldown.", OriginSwapper.LineData.LineComponent.LineType.DESCRIPTION);
     }
 
     @Override
@@ -46,10 +46,11 @@ public class JadeOrb extends OrbAbility implements VisibleAbility {
     private final Map<Player, Integer> invisMap = new HashMap<>();
 
     @Override
-    public int onOrbUseEvent(PlayerInteractEvent event) {
+    public int onOrbUsePrimaryEvent(PlayerInteractEvent event) {
+        event.getPlayer().swingMainHand();
         event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 200, 0));
         invisMap.put(event.getPlayer(), Bukkit.getCurrentTick() + 200);
-        return 2400;
+        return 1800;
     }
 
     @EventHandler
