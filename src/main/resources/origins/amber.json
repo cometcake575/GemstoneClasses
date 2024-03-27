@@ -1,0 +1,13 @@
+{
+  "powers": [
+    "gemstoneclasses:fire_resistance",
+    "gemstoneclasses:amber_orb"
+  ],
+  "icon": {
+    "item": "minecraft:command_block",
+    "custom_model_data": 8
+  },
+  "order": 5,
+  "impact": 1,
+  "description": ""
+}

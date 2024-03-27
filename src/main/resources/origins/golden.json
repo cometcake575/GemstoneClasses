@@ -1,0 +1,16 @@
+{
+  "powers": [
+    "gemstoneclasses:golden_health",
+    "gemstoneclasses:golden_speed",
+    "gemstoneclasses:golden_strength",
+    "gemstoneclasses:golden_orb"
+  ],
+  "icon": {
+    "item": "minecraft:command_block",
+    "custom_model_data": 10
+  },
+  "order": 1,
+  "impact": 3,
+  "unchoosable": true,
+  "description": ""
+}

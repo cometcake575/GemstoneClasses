@@ -1,0 +1,13 @@
+{
+  "powers": [
+    "gemstoneclasses:saturation",
+    "gemstoneclasses:citrine_orb"
+  ],
+  "icon": {
+    "item": "minecraft:command_block",
+    "custom_model_data": 7
+  },
+  "order": 5,
+  "impact": 1,
+  "description": ""
+}

@@ -1,0 +1,14 @@
+{
+  "powers": [
+    "gemstoneclasses:celestial_shield",
+    "gemstoneclasses:celestial_blessing"
+  ],
+  "icon": {
+    "item": "minecraft:command_block",
+    "custom_model_data": 9
+  },
+  "order": 1,
+  "impact": 3,
+  "unchoosable": true,
+  "description": ""
+}
